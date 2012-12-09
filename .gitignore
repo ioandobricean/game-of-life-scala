@@ -1,0 +1,9 @@
+.git
+.settings
+.worksheet
+bin
+lib_managed
+target
+.cache
+.classpath
+.project
