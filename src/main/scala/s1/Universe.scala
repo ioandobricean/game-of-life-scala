@@ -2,7 +2,7 @@ package s1
 
 class Universe(_aliveCells: Set[(Int, Int)]) {
   val aliveCells = _aliveCells;
-  val neighboursPosition = List((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
+  val neighboursPosition = List((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 0), (0, 1), (1, -1), (1, 0), (1, 1))
 
   type Cell = (Int, Int)
 
@@ -10,7 +10,7 @@ class Universe(_aliveCells: Set[(Int, Int)]) {
     if (aliveCells.size < 2) new Universe(Set())
 
     def isCellAlive(cellWithCount: (Cell, Int)): Boolean = cellWithCount match {
-      case (cell, count) => count == 2 || count == 3
+      case (cell, count) => count == 3
     }
 
     val neighboursOfAliveCells: List[Cell] = aliveCells.toList.map { case cell => neighbours(cell) }.flatten

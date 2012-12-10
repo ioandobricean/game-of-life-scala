@@ -30,27 +30,39 @@ class UniverseTest extends FunSuite {
   test("universe with 3 alive cells on primary diagonal has one cell at next generation") {
     val aliveCells = Set((1, 1), (2, 2), (3, 3))
     val universe = new Universe(aliveCells).nextGen
-    assert(universe.aliveCells === Set((2, 1), (1, 2), (2, 2), (3, 2), (2, 3)))
+    assert(universe.aliveCells === Set((2, 2)))
   }
 
-  /* 00x    0x0
-   * 0x0 -> xxx
-   * x00    0x0
+  /* 00x    000
+   * 0x0 -> 0x0
+   * x00    000
    */
   test("universe with 3 alive cells on secondary diagonal has one cell at next generation") {
     val aliveCells = Set((1, 3), (2, 2), (3, 1))
     val universe = new Universe(aliveCells).nextGen
-    assert(universe.aliveCells === Set((2, 1), (1, 2), (2, 2), (3, 2), (2, 3)))
+    assert(universe.aliveCells === Set((2, 2)))
   }
 
-  /* 0x0    xxx
-   * 0xx -> xxx
-   * 000    0xx
+  /* 0x0    0xx
+   * 0xx -> 0xx
+   * 000    000
    */
   test("a dead cell with 3 neigbours will became alive") {
     val aliveCells = Set((1, 1), (2, 1), (2, 2))
     val universe = new Universe(aliveCells).nextGen
-    assert(universe.aliveCells === Set((1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2), (3, 1), (3, 2)))
+    assert(universe.aliveCells === Set((1, 1), (1, 2), (2, 1), (2, 2)))
+  }
+  
+  /* 0x0    000    0x0
+   * 0x0 -> xxx -> 0x0
+   * 0x0    000    0x0
+   */
+  test("a vertical with 3 cells is transformed into an horizontal with 3 cells") {
+    val aliveCells = Set((1, 2), (2, 2), (3, 2))
+    val universe = new Universe(aliveCells).nextGen
+    assert(universe.aliveCells === Set((2, 1), (2, 2), (2, 3)))
+    // and revert top initial state
+    assert(universe.nextGen.aliveCells === Set((1, 2), (2, 2), (3, 2)))
   }
 
 }
